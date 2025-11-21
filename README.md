@@ -6,11 +6,12 @@ Built with [Google's Agent Development Kit (ADK)](https://github.com/google/adk)
 
 ## Features
 
-- **Orchestrator Agent**: Intelligently routes user requests to the appropriate tools.
-- **GitHub Reader**: Analyzes GitHub repositories to understand code structure and content.
-- **Blog Reader**: Scrapes and summarizes technical blog posts.
-- **Topic Researcher**: Performs web searches to gather context on technical topics.
-- **Multi-Platform Support**: (In Progress) Generates content tailored for GitHub Pages and LinkedIn.
+- **Multi-Agent Architecture**: Hierarchical system with specialized sub-agents
+- **Root Orchestrator**: Intelligently routes user requests to appropriate sub-agents
+- **GitHub Repository Agent**: Clones and analyzes GitHub repositories with human-in-the-loop for analysis scope
+- **Blog Reader Agent**: Scrapes and summarizes web content with human-in-the-loop confirmation
+- **Topic Researcher Agent**: Performs web searches and synthesizes information with human-in-the-loop scope confirmation
+- **Multi-Platform Support**: (In Progress) Generates content tailored for GitHub Pages and LinkedIn
 
 ## Prerequisites
 
@@ -69,17 +70,25 @@ Then open your browser at `http://localhost:8000` (or the port displayed in the 
 knowledge-flow-ai/
 ├── src/
 │   ├── agent/
-│   │   ├── tools/              # Sub-agent logic and tools
+│   │   ├── agents/              # Sub-agent modules
+│   │   │   ├── github_repo_agent.py
+│   │   │   ├── blog_reader_agent.py
+│   │   │   └── topic_researcher_agent.py
+│   │   ├── tools/               # Tool implementations
 │   │   │   ├── github_reader.py
 │   │   │   ├── blog_reader.py
+│   │   │   ├── web_scraper.py
 │   │   │   └── topic_researcher.py
-│   │   ├── prompts/            # System prompts
-│   │   │   └── instructions.py
-│   │   └── agent.py            # Main agent entry point
-│   └── publishing/             # (Planned) Platform connectors
-├── .env.example                # Environment variable template
-├── pyproject.toml              # Project dependencies
-└── README.md                   # This file
+│   │   ├── prompts/             # System prompts
+│   │   │   ├── instructions.py
+│   │   │   ├── github_repo_agent_instructions.py
+│   │   │   ├── blog_reader_agent_instructions.py
+│   │   │   └── topic_researcher_agent_instructions.py
+│   │   └── agent.py             # Root orchestrator agent
+│   └── publishing/              # (Planned) Platform connectors
+├── .env.example                 # Environment variable template
+├── pyproject.toml               # Project dependencies
+└── README.md                    # This file
 ```
 
 ## Contributing

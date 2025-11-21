@@ -5,10 +5,12 @@ from google.adk import Agent, Runner
 from google.adk.models import Gemini
 from google.adk.sessions import InMemorySessionService
 
-# Import tools
-from .tools.github_reader import GitHubReader
-from .tools.blog_reader import BlogReader
-from .tools.topic_researcher import TopicResearcher
+# Import sub-agents
+from .agents import (
+    create_github_repo_agent,
+    create_blog_reader_agent,
+    create_topic_researcher_agent
+)
 
 # Import prompts
 from .prompts.instructions import MAIN_AGENT_INSTRUCTION
@@ -17,27 +19,27 @@ from .prompts.instructions import MAIN_AGENT_INSTRUCTION
 load_dotenv()
 
 def create_agent():
-    """Creates and configures the Knowledge Flow Main Agent."""
+    """Creates and configures the Knowledge Flow Orchestrator Agent."""
     
     model = Gemini(model="gemini-2.5-flash")
     
-    # Initialize tools
-    github_reader = GitHubReader()
-    blog_reader = BlogReader()
-    topic_researcher = TopicResearcher()
+    # Initialize sub-agents
+    github_repo_agent = create_github_repo_agent()
+    blog_reader_agent = create_blog_reader_agent()
+    topic_researcher_agent = create_topic_researcher_agent()
     
-    # Define tools list
-    tools = [
-        github_reader.read_repo,
-        blog_reader.read_blog,
-        topic_researcher.research_topic
-    ]
-    
+    # Create orchestrator agent with sub-agents
+    # ADK's hierarchical delegation: sub-agents are passed via sub_agents parameter
+    # This gives the parent agent an implicit transfer_to_agent tool for delegation
     agent = Agent(
         model=model,
         name="knowledge_flow_orchestrator",
         instruction=MAIN_AGENT_INSTRUCTION,
-        tools=tools
+        sub_agents=[
+            github_repo_agent,
+            blog_reader_agent,
+            topic_researcher_agent
+        ]
     )
     return agent
 
