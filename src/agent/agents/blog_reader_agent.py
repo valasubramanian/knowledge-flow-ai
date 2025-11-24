@@ -2,9 +2,8 @@
 
 from google.adk import Agent
 from google.adk.models import Gemini
-from ..tools.web_scraper import WebScraper
+from ..tools.web_scraper import WebScraperTool
 from ..prompts.blog_reader_agent_instructions import BLOG_READER_AGENT_INSTRUCTION
-
 
 def create_blog_reader_agent() -> Agent:
     """Creates and configures the Blog Content Analyst agent.
@@ -21,7 +20,7 @@ def create_blog_reader_agent() -> Agent:
     model = Gemini(model="gemini-2.5-flash")
     
     # Initialize the web scraper tool
-    web_scraper = WebScraper()
+    web_scraper = WebScraperTool()
     
     # Create the agent with the web scraper tool
     agent = Agent(

@@ -4,7 +4,7 @@ import shutil
 from pathlib import Path
 from typing import Dict, List, Optional
 
-class GitHubReader:
+class GitHubReaderTool:
     def __init__(self, project_root: Optional[str] = None):
         """Initialize the GitHub Reader tool.
         

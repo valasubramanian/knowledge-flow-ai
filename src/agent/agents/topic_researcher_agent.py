@@ -2,7 +2,7 @@
 
 from google.adk import Agent
 from google.adk.models import Gemini
-from google.adk.tools import google_search
+from ..tools.topic_researcher import TopicResearcherTool
 from ..prompts.topic_researcher_agent_instructions import TOPIC_RESEARCHER_AGENT_INSTRUCTION
 
 
@@ -19,13 +19,15 @@ def create_topic_researcher_agent() -> Agent:
         Agent: Configured topic researcher agent
     """
     model = Gemini(model="gemini-2.5-flash")
+
+    topic_researcher = TopicResearcherTool()
     
     # Create the agent with the Google search tool
     agent = Agent(
         model=model,
         name="topic_researcher_agent",
         instruction=TOPIC_RESEARCHER_AGENT_INSTRUCTION,
-        tools=[google_search]
+        tools=[topic_researcher.search_topic]
     )
     
     return agent

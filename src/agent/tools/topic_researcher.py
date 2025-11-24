@@ -1,10 +1,10 @@
-from googlesearch import search
+from crewai_tools import TavilySearchTool
 
-class TopicResearcher:
+class TopicResearcherTool:
     def __init__(self):
         self.name = "topic_researcher"
     
-    def research_topic(self, topic: str):
+    def search_topic(self, topic: str):
         """Researches a topic on the web.
         
         Args:
@@ -14,12 +14,8 @@ class TopicResearcher:
             A summary of search results.
         """
         try:
-            results = []
-            # Perform a simple Google search
-            for url in search(topic, num_results=5, advanced=True):
-                results.append(f"- {url.title}: {url.url}\n  {url.description}")
-            
-            return f"Research results for '{topic}':\n\n" + "\n".join(results)
-            
+            tool = TavilySearchTool()
+            result = tool.run(query=topic)
+            return result
         except Exception as e:
             return f"Error researching topic: {e}"

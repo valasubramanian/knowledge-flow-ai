@@ -2,7 +2,7 @@
 
 from google.adk import Agent
 from google.adk.models import Gemini
-from ..tools.github_reader import GitHubReader
+from ..tools.github_reader import GitHubReaderTool
 from ..prompts.github_repo_agent_instructions import GITHUB_REPO_AGENT_INSTRUCTION
 
 
@@ -21,7 +21,7 @@ def create_github_repo_agent() -> Agent:
     model = Gemini(model="gemini-2.5-flash")
     
     # Initialize the GitHub reader tool
-    github_reader = GitHubReader()
+    github_reader = GitHubReaderTool()
     
     # Create the agent with the GitHub reader tool
     agent = Agent(
