@@ -6,7 +6,7 @@ from ..tools.web_scraper import WebScraperTool
 from ..prompts.blog_reader_agent_instructions import BLOG_READER_AGENT_INSTRUCTION
 
 def create_blog_reader_agent() -> Agent:
-    """Creates and configures the Blog Content Analyst agent.
+    """Blog Content Analyst agent For scraping and analyzing web content
     
     This agent specializes in:
     - Scraping blog posts and web pages
@@ -15,7 +15,7 @@ def create_blog_reader_agent() -> Agent:
     - Identifying key insights and takeaways
     
     Returns:
-        Agent: Configured blog reader agent
+        Agent: Blog reader agent
     """
     model = Gemini(model="gemini-2.5-flash")
     
