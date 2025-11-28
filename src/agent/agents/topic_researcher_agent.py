@@ -22,12 +22,19 @@ def create_topic_researcher_agent() -> Agent:
 
     topic_researcher = TopicResearcherTool()
     
+    # Import article creator agent to add as sub-agent
+    from .article_creator_agent import create_article_creator_agent
+    article_creator_agent = create_article_creator_agent()
+    
     # Create the agent with the Google search tool
     agent = Agent(
         model=model,
         name="topic_researcher_agent",
         instruction=TOPIC_RESEARCHER_AGENT_INSTRUCTION,
-        tools=[topic_researcher.search_topic]
+        tools=[topic_researcher.search_topic],
+        sub_agents=[
+            article_creator_agent
+        ]
     )
     
     return agent

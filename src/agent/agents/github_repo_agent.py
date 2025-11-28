@@ -28,6 +28,10 @@ def create_github_repo_agent() -> Agent:
     # Initialize the repository analyzer with temp_dir
     analyzer = RepositoryAnalyzer()
     
+    # Import article creator agent to add as sub-agent
+    from .article_creator_agent import create_article_creator_agent
+    article_creator_agent = create_article_creator_agent()
+    
     # Create the agent with multiple tools
     agent = Agent(
         model=model,
@@ -40,6 +44,9 @@ def create_github_repo_agent() -> Agent:
             analyzer.detect_components,
             analyzer.read_file,
             analyzer.extract_code_snippets,
+        ],
+        sub_agents=[
+            article_creator_agent
         ]
     )
     

@@ -22,12 +22,19 @@ def create_blog_reader_agent() -> Agent:
     # Initialize the web scraper tool
     web_scraper = WebScraperTool()
     
+    # Import article creator agent to add as sub-agent
+    from .article_creator_agent import create_article_creator_agent
+    article_creator_agent = create_article_creator_agent()
+    
     # Create the agent with the web scraper tool
     agent = Agent(
         model=model,
         name="blog_reader_agent",
         instruction=BLOG_READER_AGENT_INSTRUCTION,
-        tools=[web_scraper.scrape_website]
+        tools=[web_scraper.scrape_website],
+        sub_agents=[
+            article_creator_agent
+        ]
     )
     
     return agent
