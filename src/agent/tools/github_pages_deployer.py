@@ -239,8 +239,10 @@ Direct file URL: https://github.com/{owner}/{name}/blob/main/_posts/{filename}
         Returns:
             Tuple of (owner, repo_name)
         """
-        # Remove .git suffix if present
-        repo_url = repo_url.rstrip("/").replace(".git", "")
+        # Remove .git suffix if present (only at the end)
+        repo_url = repo_url.rstrip("/")
+        if repo_url.endswith(".git"):
+            repo_url = repo_url[:-4]  # Remove last 4 characters (.git)
         
         # Extract from various URL formats
         patterns = [
