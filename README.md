@@ -50,13 +50,12 @@ Built with [Google's Agent Development Kit (ADK)](https://github.com/google/adk)
     GOOGLE_API_KEY=your_google_api_key_here
     GITHUB_TOKEN=your_github_personal_access_token_here
     LINKEDIN_ACCESS_TOKEN=your_linkedin_access_token_here
-    LINKEDIN_USER_URN=your_linkedin_user_urn_here
     ```
 
     **Note**:
 
     - `GITHUB_TOKEN` is required only if you want to deploy articles to GitHub Pages. Get a Personal Access Token from GitHub Settings → Developer settings → Personal access tokens with `repo` permissions.
-    - `LINKEDIN_ACCESS_TOKEN` and `LINKEDIN_USER_URN` are required for the LinkedIn Sharer Agent.
+    - `LINKEDIN_ACCESS_TOKEN` is required for the LinkedIn Sharer Agent.
 
 ## Usage
 
