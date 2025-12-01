@@ -75,11 +75,13 @@ date: YYYY-MM-DD
 categories: category1 category2
 tags: [tag1, tag2, tag3]
 description: "Brief article description"
+permalink: /:year/:month/:day/:title.html
 ---
 ```
 
 **GitHub Pages URL Format**:
 - Standard: `https://username.github.io/repo-name/YYYY/MM/DD/slug.html`
+- User Pages: `https://username.github.io/YYYY/MM/DD/slug.html`
 - Custom domains may vary
 
 ## Error Handling

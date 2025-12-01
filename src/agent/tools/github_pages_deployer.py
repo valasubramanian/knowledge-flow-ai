@@ -144,6 +144,9 @@ class GitHubPagesDeployerTool:
                 if "description" in metadata:
                     f.write(f"description: \"{metadata['description']}\"\n")
                 
+                # Set explicit permalink structure
+                f.write("permalink: /:year/:month/:day/:title.html\n")
+                
                 f.write("---\n\n")
                 
                 # Write article content
@@ -175,7 +178,14 @@ class GitHubPagesDeployerTool:
             # Generate GitHub Pages URL
             # Standard format: https://username.github.io/repo-name/YYYY/MM/DD/slug.html
             year, month, day = date_str.split("-")
-            pages_url = f"https://{owner}.github.io/{name}/{year}/{month}/{day}/{slug}.html"
+            
+            # Handle User/Org Pages (repo name matches owner.github.io)
+            if name.lower() == f"{owner.lower()}.github.io":
+                base_url = f"https://{owner}.github.io"
+            else:
+                base_url = f"https://{owner}.github.io/{name}"
+                
+            pages_url = f"{base_url}/{year}/{month}/{day}/{slug}.html"
             
             return f"""
 Article Deployed Successfully!
