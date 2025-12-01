@@ -27,6 +27,10 @@ def create_article_deployer_agent() -> Agent:
     # Initialize the GitHub Pages deployer tool
     deployer = GitHubPagesDeployerTool()
     
+    # Import LinkedIn sharer agent
+    from .linkedin_sharer_agent import create_linkedin_sharer_agent
+    linkedin_sharer_agent = create_linkedin_sharer_agent()
+
     # Create the agent with deployment tools
     agent = Agent(
         model=model,
@@ -35,6 +39,9 @@ def create_article_deployer_agent() -> Agent:
         tools=[
             deployer.deploy_article,
             deployer.validate_deployment,
+        ],
+        sub_agents=[
+            linkedin_sharer_agent
         ]
     )
     

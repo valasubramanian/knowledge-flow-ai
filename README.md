@@ -12,8 +12,9 @@ Built with [Google's Agent Development Kit (ADK)](https://github.com/google/adk)
 - **Blog Reader Agent**: Scrapes and summarizes web content with human-in-the-loop confirmation
 - **Topic Researcher Agent**: Performs web searches and synthesizes information with human-in-the-loop scope confirmation
 - **Article Creator Agent**: Creates well-structured technical articles from source information with iterative refinement
-- **Article Deployer Agent**: Deploys articles to GitHub Pages with Jekyll-compatible formatting
-- **Human-in-the-Loop Workflow**: Interactive refinement at every stage from research to publication
+- Article Deployer Agent: Deploys articles to GitHub Pages with Jekyll-compatible formatting
+- LinkedIn Sharer Agent: Posts summaries of deployed articles to LinkedIn with Human-in-the-Loop refinement
+- Human-in-the-Loop Workflow: Interactive refinement at every stage from research to publication
 
 ## Prerequisites
 
@@ -48,9 +49,14 @@ Built with [Google's Agent Development Kit (ADK)](https://github.com/google/adk)
     ```
     GOOGLE_API_KEY=your_google_api_key_here
     GITHUB_TOKEN=your_github_personal_access_token_here
+    LINKEDIN_ACCESS_TOKEN=your_linkedin_access_token_here
+    LINKEDIN_USER_URN=your_linkedin_user_urn_here
     ```
 
-    **Note**: `GITHUB_TOKEN` is required only if you want to deploy articles to GitHub Pages. Get a Personal Access Token from GitHub Settings → Developer settings → Personal access tokens with `repo` permissions.
+    **Note**:
+
+    - `GITHUB_TOKEN` is required only if you want to deploy articles to GitHub Pages. Get a Personal Access Token from GitHub Settings → Developer settings → Personal access tokens with `repo` permissions.
+    - `LINKEDIN_ACCESS_TOKEN` and `LINKEDIN_USER_URN` are required for the LinkedIn Sharer Agent.
 
 ## Usage
 
@@ -83,20 +89,23 @@ knowledge-flow-ai/
 │   │   │   ├── blog_reader_agent.py
 │   │   │   ├── topic_researcher_agent.py
 │   │   │   ├── article_creator_agent.py      # NEW: Article creation
-│   │   │   └── article_deployer_agent.py     # NEW: GitHub Pages deployment
+│   │   │   ├── article_deployer_agent.py     # NEW: GitHub Pages deployment
+│   │   │   └── linkedin_sharer_agent.py      # NEW: LinkedIn sharing
 │   │   ├── tools/               # Tool implementations
 │   │   │   ├── github_reader.py
 │   │   │   ├── web_scraper.py
 │   │   │   ├── topic_researcher.py
 │   │   │   ├── article_creator.py            # NEW: Article creation tool
-│   │   │   └── github_pages_deployer.py      # NEW: GitHub Pages tool
+│   │   │   ├── github_pages_deployer.py      # NEW: GitHub Pages tool
+│   │   │   └── linkedin_sharer.py            # NEW: LinkedIn tool
 │   │   ├── prompts/             # System prompts
 │   │   │   ├── instructions.py
 │   │   │   ├── github_repo_agent_instructions.py
 │   │   │   ├── blog_reader_agent_instructions.py
 │   │   │   ├── topic_researcher_agent_instructions.py
 │   │   │   ├── article_creator_agent_instructions.py    # NEW
-│   │   │   └── article_deployer_agent_instructions.py   # NEW
+│   │   │   ├── article_deployer_agent_instructions.py   # NEW
+│   │   │   └── linkedin_sharer_agent_instructions.py    # NEW
 │   │   ├── utils/               # Utility modules
 │   │   │   └── repository_analyzer.py
 │   │   └── agent.py             # Root orchestrator agent
