@@ -108,9 +108,25 @@ class GitHubPagesDeployerTool:
             
             # Generate Jekyll-compatible filename: YYYY-MM-DD-title.md
             date_str = metadata.get("date", datetime.now().strftime("%Y-%m-%d"))
-            if isinstance(date_str, str) and len(date_str) > 10:
-                # Extract just the date part if it's a full ISO timestamp
-                date_str = date_str[:10]
+            
+            # Parse and normalize the date to YYYY-MM-DD format
+            if isinstance(date_str, str):
+                # Try to parse the date if it's not already in YYYY-MM-DD format
+                if not re.match(r'^\d{4}-\d{2}-\d{2}$', date_str):
+                    try:
+                        # Handle various date formats
+                        if len(date_str) > 10:
+                            # ISO timestamp format (e.g., "2025-12-01T20:27:50")
+                            parsed_date = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+                        else:
+                            # Try parsing other formats like "December 1, 2025"
+                            from dateutil import parser
+                            parsed_date = parser.parse(date_str)
+                        
+                        date_str = parsed_date.strftime("%Y-%m-%d")
+                    except (ValueError, ImportError):
+                        # If parsing fails, use current date
+                        date_str = datetime.now().strftime("%Y-%m-%d")
             
             # Create slug from title
             slug = self._create_slug(title)
